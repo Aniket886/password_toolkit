@@ -1,0 +1,9 @@
+{
+  "timestamp": "2025-10-06T01:18:49.260903",
+  "hash": "008c70392e3abfbd0fa47bbc2ed96aa99bd49e159727fcba0f...",
+  "password": "Password123",
+  "algorithm": "sha256",
+  "time_seconds": 0.0,
+  "attempts": 6,
+  "method": "dictionary"
+}

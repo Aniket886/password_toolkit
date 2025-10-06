@@ -1,0 +1,23 @@
+# Large wordlist files (over 100MB - too big for GitHub)
+wordlists/rockyou.txt
+wordlists/rockyou_1.txt
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+env/
+.env
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db

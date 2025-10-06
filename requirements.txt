@@ -1,0 +1,32 @@
+# Password Cracking & Hashing Toolkit - Dependencies
+# Educational Cybersecurity Toolkit
+
+# Core hashing library
+bcrypt==4.1.2
+
+# For colored console output (optional but recommended)
+colorama==0.4.6
+
+# Progress bar for better UX (optional)
+tqdm==4.66.1
+
+# For testing (optional)
+pytest==7.4.3
+pytest-cov==4.1.0
+
+# Note: The following are part of Python standard library and don't need installation:
+# - hashlib (for SHA256, SHA512, MD5)
+# - itertools (for brute force combinations)
+# - string (for character sets)
+# - threading (for multi-threading)
+# - json (for data serialization)
+# - argparse (for command line arguments)
+# - getpass (for secure password input)
+# - os, sys, time (system utilities)
+# - re (regular expressions)
+# - math (for entropy calculations)
+# - collections (for Counter)
+# - datetime (for timestamps)
+# - pickle (for serialization)
+# - queue (for thread-safe queues)
+# - base64 (for encoding)

@@ -1,0 +1,85 @@
+{
+  "test_hashes": [
+    {
+      "password": "password",
+      "sha256": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+      "md5": "5f4dcc3b5aa765d61d8327deb882cf99",
+      "description": "Common weak password"
+    },
+    {
+      "password": "123456",
+      "sha256": "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
+      "md5": "e10adc3949ba59abbe56e057f20f883e",
+      "description": "Most common numeric password"
+    },
+    {
+      "password": "admin",
+      "sha256": "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918",
+      "md5": "21232f297a57a5a743894a0e4a801fc3",
+      "description": "Default admin password"
+    },
+    {
+      "password": "test123",
+      "sha256": "ecd71870d1963316a97e3ac3408c9835ad8cf0f3c1bc703527c30265534f75ae",
+      "md5": "cc03e747a6afbbcbf8be7668acfebee5",
+      "description": "Common test password"
+    },
+    {
+      "password": "Password1",
+      "sha256": "0b14d501a594442a01c6859541bcb3e8164d183d32937b851835442f69d5c94e",
+      "md5": "2ac9cb7dc02b3c0083eb70898e549b63",
+      "description": "Meets basic complexity requirements"
+    },
+    {
+      "password": "P@ssw0rd",
+      "sha256": "21901e0d03f5292d4e5e40e1b7d4c3076151e0132e006eb95e5b838703e597dc",
+      "md5": "161ebd7d45089b3446ee4e0d86dbcf92",
+      "description": "Common leetspeak variation"
+    },
+    {
+      "password": "abc",
+      "sha256": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
+      "md5": "900150983cd24fb0d6963f7d28e17f72",
+      "description": "Simple 3-letter password for brute force testing"
+    },
+    {
+      "password": "1234",
+      "sha256": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+      "md5": "81dc9bdb52d04dc20036dbd8313ed055",
+      "description": "4-digit PIN"
+    },
+    {
+      "password": "hello",
+      "sha256": "2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824",
+      "md5": "5d41402abc4b2a76b9719d911017c592",
+      "description": "Common dictionary word"
+    },
+    {
+      "password": "monkey123",
+      "sha256": "d0ce643e8e9c82a5e50b3e1e965e6122e07b2f2c63ea7cd1bc8fb016b3528833",
+      "md5": "d0970714757783e6cf17b26fb8e2298f",
+      "description": "Dictionary word with numbers"
+    }
+  ],
+  "bcrypt_hashes": [
+    {
+      "password": "password",
+      "hash": "$2b$12$R9h/cIPz0gi.URNNX3kh2OPST9/PgBkqquzi.Ss7KIUgO2t0jWMUW",
+      "rounds": 12
+    },
+    {
+      "password": "test123",
+      "hash": "$2b$10$nOUIs5kJ7naTuTFkBy1veuK0kSxUFXfuaOKdOKf9xYT0KKIGSJwFa",
+      "rounds": 10
+    }
+  ],
+  "salted_hashes": [
+    {
+      "password": "password",
+      "algorithm": "sha256",
+      "salt": "YXNkZmFzZGY=",
+      "hash": "64a868d4b23af02cdfac3db8590957c42c1fef40dfd3eb5378a55c8584b23320",
+      "description": "SHA256 with base64 salt 'asdfasdf'"
+    }
+  ]
+}
