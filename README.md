@@ -102,6 +102,12 @@ python src/password_cracker.py --analyze "MyPassword123"
 python src/password_cracker.py --crack "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8" --wordlist wordlists/common_passwords.txt
 ```
 
+**Use RockYou wordlists:**
+```bash
+python src/password_cracker.py --crack "hash_here" --wordlist wordlists/rockyou_2.txt
+python src/password_cracker.py --crack "hash_here" --wordlist wordlists/rockyou_2025_00.txt
+```
+
 ## 📖 Usage Guide
 
 ### Main Menu Options
@@ -218,20 +224,44 @@ report = analyzer.generate_report("MyPassword123")
 
 ## 📝 Wordlists
 
-The toolkit includes two carefully curated wordlists:
+The toolkit includes multiple carefully curated wordlists for different testing scenarios:
 
-### common_passwords.txt
+### Basic Wordlists
+
+#### common_passwords.txt
 - **118 unique passwords** (cleaned, no duplicates)
 - Most commonly used passwords from real breaches
 - Optimized for quick testing
 - Quality Score: 90/100 ⭐⭐⭐⭐⭐
 
-### enhanced_wordlist.txt  
+#### enhanced_wordlist.txt  
 - **185+ unique passwords** organized in 18 categories
 - Categories include: Common, Numeric, Keyboard patterns, Names, Sports, Tech, etc.
 - Includes variations with special characters and substitutions
 - Quality Score: 65/100 ⭐⭐⭐⭐
 - Perfect for comprehensive testing
+
+### RockYou Wordlists
+
+#### rockyou_2.txt
+- Curated subset of the famous RockYou password database
+- Contains commonly used passwords from real-world breaches
+- Optimized size for educational testing
+- Excellent for demonstrating dictionary attacks
+
+#### RockYou 2025 Series
+- **rockyou_2025_00.txt** - Primary wordlist segment
+- **rockyou_2025_01.txt** - Secondary wordlist segment  
+- **rockyou_2025_02.txt** - Tertiary wordlist segment
+- **rockyou_2025_03.txt** - Quaternary wordlist segment
+- **rockyou_2025_04.txt** - Quinary wordlist segment
+- **rockyou_2025_05.txt** - Final wordlist segment
+
+These segmented wordlists provide:
+- Comprehensive password coverage from modern breach data
+- Manageable file sizes for educational environments
+- Progressive difficulty levels for testing
+- Real-world password patterns and variations
 
 ### Wordlist Statistics Tool
 Analyze any wordlist with:
