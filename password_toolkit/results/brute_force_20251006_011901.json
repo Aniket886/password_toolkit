@@ -1,0 +1,9 @@
+{
+  "timestamp": "2025-10-06T01:19:01.342469",
+  "hash": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb4...",
+  "password": "abc",
+  "algorithm": "sha256",
+  "time_seconds": 0.0,
+  "attempts": 731,
+  "method": "brute_force"
+}

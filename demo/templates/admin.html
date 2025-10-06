@@ -1,0 +1,259 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Panel - Demo Vulnerable Website{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card shadow-lg">
+            <div class="card-header bg-warning text-dark">
+                <h4 class="mb-0">
+                    <i class="fas fa-cog"></i>
+                    Admin Panel - Security Monitoring
+                </h4>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-warning">
+                    <i class="fas fa-shield-alt"></i>
+                    <strong>Admin Access:</strong> You are viewing the administrative interface. 
+                    This panel shows real-time login attempts and system activity.
+                </div>
+                
+                <!-- Statistics Cards -->
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <div class="card bg-primary text-white">
+                            <div class="card-body text-center">
+                                <i class="fas fa-users fa-2x mb-2"></i>
+                                <h5 id="totalUsers">Loading...</h5>
+                                <small>Total Users</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card bg-info text-white">
+                            <div class="card-body text-center">
+                                <i class="fas fa-sign-in-alt fa-2x mb-2"></i>
+                                <h5 id="totalAttempts">Loading...</h5>
+                                <small>Login Attempts</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card bg-success text-white">
+                            <div class="card-body text-center">
+                                <i class="fas fa-check-circle fa-2x mb-2"></i>
+                                <h5 id="successfulLogins">Loading...</h5>
+                                <small>Successful Logins</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card bg-danger text-white">
+                            <div class="card-body text-center">
+                                <i class="fas fa-times-circle fa-2x mb-2"></i>
+                                <h5 id="failedAttempts">Loading...</h5>
+                                <small>Failed Attempts</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Real-time Login Attempts -->
+                <div class="row">
+                    <div class="col-12">
+                        <h5><i class="fas fa-history"></i> Recent Login Attempts</h5>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div>
+                                <button id="refreshBtn" class="btn btn-primary btn-sm">
+                                    <i class="fas fa-sync-alt"></i> Refresh
+                                </button>
+                                <button id="autoRefreshBtn" class="btn btn-secondary btn-sm">
+                                    <i class="fas fa-play"></i> Auto Refresh
+                                </button>
+                            </div>
+                            <div>
+                                <span class="badge bg-secondary" id="lastUpdate">Never</span>
+                            </div>
+                        </div>
+                        
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover" id="attemptsTable">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>Timestamp</th>
+                                        <th>Username</th>
+                                        <th>Password Attempt</th>
+                                        <th>IP Address</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="attemptsBody">
+                                    <tr>
+                                        <td colspan="5" class="text-center">
+                                            <i class="fas fa-spinner fa-spin"></i> Loading login attempts...
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- System Information -->
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <h5><i class="fas fa-info-circle"></i> System Information</h5>
+                        <table class="table table-bordered">
+                            <tr>
+                                <td><strong>Server Time:</strong></td>
+                                <td id="serverTime"></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Database:</strong></td>
+                                <td>SQLite (demo_users.db)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Security Level:</strong></td>
+                                <td><span class="badge bg-danger">Intentionally Vulnerable</span></td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <h5><i class="fas fa-exclamation-triangle"></i> Security Vulnerabilities</h5>
+                        <ul class="list-group">
+                            <li class="list-group-item list-group-item-danger">
+                                <i class="fas fa-times"></i> No rate limiting
+                            </li>
+                            <li class="list-group-item list-group-item-danger">
+                                <i class="fas fa-times"></i> Weak password policy
+                            </li>
+                            <li class="list-group-item list-group-item-danger">
+                                <i class="fas fa-times"></i> User enumeration possible
+                            </li>
+                            <li class="list-group-item list-group-item-danger">
+                                <i class="fas fa-times"></i> No account lockout
+                            </li>
+                            <li class="list-group-item list-group-item-danger">
+                                <i class="fas fa-times"></i> Exposed API endpoints
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+let autoRefreshInterval = null;
+let isAutoRefreshing = false;
+
+$(document).ready(function() {
+    loadStatistics();
+    loadLoginAttempts();
+    updateServerTime();
+    
+    // Update server time every second
+    setInterval(updateServerTime, 1000);
+    
+    $('#refreshBtn').click(function() {
+        loadStatistics();
+        loadLoginAttempts();
+    });
+    
+    $('#autoRefreshBtn').click(function() {
+        toggleAutoRefresh();
+    });
+});
+
+function loadStatistics() {
+    // Load user statistics
+    $.get('/api/users', function(data) {
+        $('#totalUsers').text(data.total);
+    });
+    
+    // Load login attempt statistics
+    $.get('/api/login-attempts', function(data) {
+        $('#totalAttempts').text(data.total);
+        
+        const successful = data.attempts.filter(a => a.success).length;
+        const failed = data.total - successful;
+        
+        $('#successfulLogins').text(successful);
+        $('#failedAttempts').text(failed);
+    });
+}
+
+function loadLoginAttempts() {
+    $.get('/api/login-attempts', function(data) {
+        const tbody = $('#attemptsBody');
+        tbody.empty();
+        
+        if (data.attempts.length === 0) {
+            tbody.append(`
+                <tr>
+                    <td colspan="5" class="text-center text-muted">
+                        No login attempts recorded yet
+                    </td>
+                </tr>
+            `);
+            return;
+        }
+        
+        data.attempts.forEach(function(attempt) {
+            const statusBadge = attempt.success 
+                ? '<span class="badge bg-success"><i class="fas fa-check"></i> Success</span>'
+                : '<span class="badge bg-danger"><i class="fas fa-times"></i> Failed</span>';
+            
+            const timestamp = new Date(attempt.timestamp).toLocaleString();
+            
+            tbody.append(`
+                <tr class="${attempt.success ? 'table-success' : 'table-danger'}">
+                    <td>${timestamp}</td>
+                    <td><code>${attempt.username}</code></td>
+                    <td><code>${attempt.password_attempt}</code></td>
+                    <td>${attempt.ip_address}</td>
+                    <td>${statusBadge}</td>
+                </tr>
+            `);
+        });
+        
+        $('#lastUpdate').text('Updated: ' + new Date().toLocaleTimeString());
+    }).fail(function() {
+        $('#attemptsBody').html(`
+            <tr>
+                <td colspan="5" class="text-center text-danger">
+                    <i class="fas fa-exclamation-triangle"></i> Error loading login attempts
+                </td>
+            </tr>
+        `);
+    });
+}
+
+function toggleAutoRefresh() {
+    const btn = $('#autoRefreshBtn');
+    
+    if (isAutoRefreshing) {
+        clearInterval(autoRefreshInterval);
+        btn.html('<i class="fas fa-play"></i> Auto Refresh').removeClass('btn-success').addClass('btn-secondary');
+        isAutoRefreshing = false;
+    } else {
+        autoRefreshInterval = setInterval(function() {
+            loadStatistics();
+            loadLoginAttempts();
+        }, 5000); // Refresh every 5 seconds
+        
+        btn.html('<i class="fas fa-pause"></i> Stop Auto Refresh').removeClass('btn-secondary').addClass('btn-success');
+        isAutoRefreshing = true;
+    }
+}
+
+function updateServerTime() {
+    $('#serverTime').text(new Date().toLocaleString());
+}
+</script>
+{% endblock %}
